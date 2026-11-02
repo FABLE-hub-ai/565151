@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183c31">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Защищённая панель управления отеля Ала-Тоо Inn.">
+  <title>Панель администратора — Ала-Тоо Inn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/admin.css"><script src="/admin.js" defer></script>
+</head>
+<body class="admin-body">
+  <header class="admin-header"><a class="brand" href="/"><span class="brand-symbol" aria-hidden="true">△</span><span>Ала-Тоо Inn<small>ПАНЕЛЬ УПРАВЛЕНИЯ</small></span></a><a class="admin-exit-link" href="/">Вернуться на сайт ↗</a></header>
+  <main class="admin-main">
+    <section class="auth-card" id="auth-card" aria-labelledby="auth-heading">
+      <span class="eyebrow">ЗАЩИЩЁННЫЙ ДОСТУП</span><h1 id="auth-heading">Панель отеля</h1>
+      <p class="auth-description" id="auth-description">Проверяем настройки доступа…</p>
+      <form class="admin-form" id="setup-form" hidden>
+        <label for="setup-token">Одноразовый код из окна сервера</label><input id="setup-token" name="setupToken" autocomplete="one-time-code" required>
+        <label for="setup-password">Придумайте пароль администратора</label><input id="setup-password" name="password" type="password" minlength="12" maxlength="200" autocomplete="new-password" required>
+        <p class="legal-note">Не менее 12 символов. Сохраните пароль в надёжном месте — сайт не устанавливает пароль автоматически.</p>
+        <button class="button" type="submit">Создать администратора <span>→</span></button>
+      </form>
+      <form class="admin-form" id="login-form" hidden>
+        <label for="login-username">Логин</label><input id="login-username" name="username" value="admin" autocomplete="username" required>
+        <label for="login-password">Пароль</label><input id="login-password" name="password" type="password" autocomplete="current-password" required>
+        <button class="button" type="submit">Войти в панель <span>→</span></button>
+      </form>
+      <p class="admin-feedback" id="auth-feedback" role="status" aria-live="polite"></p>
+      <p class="legal-note">Панель доступна только на компьютере, где запущен сервер.</p>
+    </section>
+
+    <section class="dashboard" id="dashboard" hidden>
+      <div class="dashboard-heading"><div><span class="eyebrow">УПРАВЛЕНИЕ ОТЕЛЕМ</span><h1>Здравствуйте, <span id="admin-name">admin</span>.</h1><p>Заявки и содержимое сохраняются в базе данных этого сайта.</p></div><button class="button button-outline" id="logout-button" type="button">Выйти из панели</button></div>
+      <nav class="admin-tabs" aria-label="Разделы панели">
+        <button type="button" class="admin-tab is-active" data-tab="bookings">Заявки <span id="booking-count">0</span></button>
+        <button type="button" class="admin-tab" data-tab="rooms">Номера и цены</button>
+        <button type="button" class="admin-tab" data-tab="news">Новости</button>
+        <button type="button" class="admin-tab" data-tab="reviews">Рейтинги</button>
+      </nav>
+      <p class="admin-feedback" id="dashboard-feedback" role="status" aria-live="polite"></p>
+
+      <section class="dashboard-panel" id="panel-bookings" aria-labelledby="bookings-title">
+        <div class="panel-heading"><div><h2 id="bookings-title">Заявки гостей</h2><p>Новые заявки приходят сюда после отправки формы на сайте.</p></div><button class="button button-outline" id="refresh-button" type="button">Обновить список</button></div>
+        <div class="dashboard-stats"><article><span>Всего заявок</span><strong id="stat-total">0</strong></article><article><span>Новые</span><strong id="stat-new">0</strong></article><article><span>Подтверждённые</span><strong id="stat-confirmed">0</strong></article></div>
+        <div class="table-wrap"><table><thead><tr><th>Гость</th><th>Даты</th><th>Номер и гости</th><th>Стоимость</th><th>Статус</th></tr></thead><tbody id="bookings-table"><tr><td colspan="5">Загружаем заявки…</td></tr></tbody></table></div>
+      </section>
+
+      <section class="dashboard-panel" id="panel-rooms" aria-labelledby="rooms-admin-title" hidden>
+        <div class="panel-heading"><div><h2 id="rooms-admin-title">Номера и цены</h2><p>Изменения сразу появятся в каталоге номеров и расчёте проживания.</p></div></div>
+        <div class="admin-room-list" id="admin-rooms"></div>
+      </section>
+
+      <section class="dashboard-panel" id="panel-news" aria-labelledby="news-admin-title" hidden>
+        <div class="panel-heading"><div><h2 id="news-admin-title">Новости сайта</h2><p>Публикации отображаются на главной странице и в разделе новостей.</p></div></div>
+        <form class="news-editor admin-form" id="news-form">
+          <label for="news-category">Категория</label><input id="news-category" name="category" maxlength="60" placeholder="Например, Сезонное предложение" required>
+          <label for="news-title">Заголовок</label><input id="news-title" name="title" maxlength="160" required>
+          <label for="news-description">Текст</label><textarea id="news-description" name="description" maxlength="600" rows="3" required></textarea>
+          <label for="news-image">Изображение · HTTPS-ссылка</label><input id="news-image" name="image" type="url" maxlength="1500" placeholder="https://..." required>
+          <button class="button" type="submit">Добавить новость <span>→</span></button>
+        </form>
+        <div class="admin-news-list" id="admin-news"></div>
+      </section>
+      <section class="dashboard-panel" id="panel-reviews" aria-labelledby="reviews-admin-title" hidden>
+        <div class="panel-heading"><div><h2 id="reviews-admin-title">Оценки сервисов бронирования</h2><p>Публикуйте только актуальные оценки. Не используйте неподтверждённые цифры.</p></div></div>
+        <div class="admin-review-list" id="admin-reviews"></div>
+      </section>
+      <p class="admin-privacy-note">База находится на этом компьютере в папке <code>data</code>. Делайте резервную копию этой папки. Для публичного доступа в интернете потребуются отдельные настройки безопасности, хостинг и домен.</p>
+    </section>
+  </main>
+</body>
+</html>

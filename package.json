@@ -1,0 +1,27 @@
+{
+  "name": "ala-too-inn",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Сайт отеля Ала-Тоо Inn с бронированием и панелью администратора",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check script.js && node --check admin.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "connect-sqlite3": "^0.9.16",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "express-session": "^1.18.2",
+    "helmet": "^8.1.0",
+    "better-sqlite3": "^12.2.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "sqlite3@5.1.7": true
+  }
+}
